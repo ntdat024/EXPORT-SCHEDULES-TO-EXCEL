@@ -1,0 +1,62 @@
+﻿<Window x:Class="OPENSOURCE.ExportScheduleToExcelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OPENSOURCE"
+            xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             ShowInTaskbar="True"
+            WindowStartupLocation="CenterScreen"
+            MinHeight="455" MinWidth="500"
+            Height="455" Width="500"
+            ResizeMode="CanResize"
+            Title="Export Schedule To Excel">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0" Margin="5 5 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Filter Name:" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Text="{Binding TextFilter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 5 0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                <Behaviors:Interaction.Triggers>
+                    <Behaviors:EventTrigger EventName="TextChanged">
+                        <Behaviors:InvokeCommandAction Command="{Binding TextFilterChanged}">
+                        </Behaviors:InvokeCommandAction>
+                    </Behaviors:EventTrigger>
+                </Behaviors:Interaction.Triggers>
+            </TextBox>
+        </Grid>
+
+        
+        <ListBox Grid.Row="1" x:Name="lbx_Schedules" BorderBrush="Gray" ItemsSource="{Binding ListSchedules, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DisplayMemberPath="Name" Margin="5" SelectionMode="Extended"/>
+
+        <Grid Grid.Row="2" Margin="5 0 0 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 5 0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+            <Button Grid.Column="1" Content="Browse" Command="{Binding BrowseCmd}" Margin="0 0 5 0" Height="22"/>
+        </Grid>
+        <CheckBox Grid.Row="3" Content="Export to one file" Margin="5 0 0 0" IsChecked="{Binding ExportToOneFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+        <StackPanel Grid.Row="4" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 0 5 5">
+            <Button Content="Export" Width="80" Command="{Binding OKCmd}"/>
+            <Button Content="Cancel"  Width="80" Margin="5 0 0 0" Command="{Binding CancelCmd}"/>
+        </StackPanel>
+        
+    </Grid>
+</Window>
